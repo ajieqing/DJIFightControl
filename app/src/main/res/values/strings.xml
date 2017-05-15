@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Fly Dream</string>
+    <string name="take_off">起飞</string>
+    <string name="simulatordemo">SimulatorDemo</string>
+    <string name="start_flightcontrol">链接设备</string>
+    <string name="land">着陆</string>
+    <string name="rt">return</string>
+    <string name="sdk_registration_message">SDK Registration Failed. Please check the bundle ID and your network connectivity</string>
+    <string name="success">Success</string>
+    <string name="flighcontroler">FlighControler</string>
+    <string name="setting">设置</string>
+</resources>

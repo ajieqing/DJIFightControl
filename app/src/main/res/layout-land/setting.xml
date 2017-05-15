@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#676666"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/bridge"
+                style="@style/Setting_TextView"
+                android:text="桥墩设置"/>
+
+            <TextView
+                android:id="@+id/t_name"
+                style="@style/Setting_TextView"
+                android:layout_below="@id/bridge"
+                android:layout_toEndOf="@id/bridge"
+                android:text="桥墩编号"/>
+
+            <EditText
+                android:id="@+id/e_name"
+                style="@style/Setting_EditText"
+                android:layout_alignBaseline="@id/t_name"
+                android:layout_toEndOf="@id/t_name"
+                android:hint="请输入桥墩编号"
+                android:maxLines="1"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/t_n"
+                style="@style/Setting_TextView"
+                android:layout_below="@id/t_name"
+                android:layout_toEndOf="@id/bridge"
+                android:text="拍照次数"/>
+
+            <EditText
+                android:id="@+id/e_n"
+                style="@style/Setting_EditText"
+                android:layout_alignBaseline="@id/t_n"
+                android:layout_toEndOf="@id/t_n"
+                android:hint="请输入拍照次数"
+                android:inputType="numberSigned"
+                android:maxLines="1"
+                android:textColor="#ffffff"/>
+
+            <TextView
+                android:id="@+id/t_high"
+                style="@style/Setting_TextView"
+                android:layout_alignBaseline="@id/t_name"
+                android:layout_toEndOf="@id/e_name"
+                android:text="桥墩高度"/>
+
+            <EditText
+                android:id="@+id/e_high"
+                style="@style/Setting_EditText"
+                android:layout_alignBaseline="@id/t_high"
+                android:layout_toEndOf="@id/t_high"
+                android:hint="请输入桥墩高度"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:textColor="#ffffff"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <Button
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/ok"
+        android:onClick="save"/>
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/back"
+        android:onClick="back"/>
+</RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="150dp"
+              android:layout_height="100dp"
+              android:paddingBottom="10dp"
+              android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/logo"/>
+
+</LinearLayout>

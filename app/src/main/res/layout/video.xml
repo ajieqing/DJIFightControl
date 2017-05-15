@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000000"
+                android:orientation="vertical">
+
+    <TextureView
+        android:id="@+id/videoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageButton
+        android:id="@+id/ib_forward"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/ib_leftward"
+        android:layout_toEndOf="@+id/ib_leftward"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/forward_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_turnright"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/ib_backward"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/turnright_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_rise"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_toStartOf="@id/ib_turnright"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/fall_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_turnleft"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/ib_rise"
+        android:layout_toStartOf="@id/ib_rise"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/turnleft_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_fall"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/ib_turnright"
+        android:layout_toEndOf="@id/ib_turnleft"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rise_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_leftward"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@+id/ib_backward"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/leftward_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_backward"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@id/ib_leftward"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/backward_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_rigthward"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_above="@id/ib_backward"
+        android:layout_toEndOf="@id/ib_backward"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/rightward_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_takeoff"
+        android:layout_width="65dp"
+        android:layout_height="33dp"
+        android:layout_alignBottom="@+id/ib_rise"
+        android:layout_toStartOf="@+id/ib_turnleft"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/takeoff_button"/>
+
+    <ImageButton
+        android:id="@+id/ib_switch"
+        android:layout_width="65dp"
+        android:layout_height="33dp"
+        android:layout_alignBottom="@+id/ib_backward"
+        android:layout_toEndOf="@+id/ib_rigthward"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/switch_button"/>
+
+    <TextView
+        android:id="@+id/mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/ib_takeoff"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="6dp"
+        android:background="#00000000"
+        android:text="飞行模式"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"/>
+
+    <ImageButton
+        android:id="@+id/ib_menu"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/ib_fall"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/menu_normal"/>
+
+    <ImageView
+        android:id="@+id/iv_compass_dial"
+        android:layout_width="81dp"
+        android:layout_height="81dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="#00000000"
+        android:src="@drawable/compass_dial"/>
+
+    <ImageView
+        android:id="@+id/iv_compass_hand"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignStart="@id/iv_compass_dial"
+        android:layout_alignTop="@id/iv_compass_dial"
+        android:layout_margin="5.5dp"
+        android:src="@drawable/compass_hand"/>
+
+    <ImageView
+        android:id="@+id/iv_databar_background"
+        android:layout_width="179dp"
+        android:layout_height="53dp"
+        android:layout_alignTop="@+id/ib_menu"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/iv_compass_dial"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/databar_background"/>
+
+    <TextView
+        android:id="@+id/tv_height_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/iv_databar_background"
+        android:layout_alignTop="@id/iv_databar_background"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="4dp"
+        android:background="#00000000"
+        android:text="高度:"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_height_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_databar_background"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/tv_height_text"
+        android:background="#00000000"
+        android:text="50m"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_battry_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_databar_background"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/tv_height_show"
+        android:background="#00000000"
+        android:text="电量:"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_battry_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/iv_databar_background"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/tv_battry_text"
+        android:background="#00000000"
+        android:text="90%"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_velocity_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/iv_databar_background"
+        android:layout_below="@id/tv_height_text"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="2dp"
+        android:background="#00000000"
+        android:text="速度:"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_velocity_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_velocity_text"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@id/tv_velocity_text"
+        android:background="#00000000"
+        android:text="50m"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_direction_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/tv_battry_text"
+        android:layout_alignTop="@id/tv_velocity_text"
+        android:background="#00000000"
+        android:text="方向:"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv_direction_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_velocity_text"
+        android:layout_marginStart="4dp"
+        android:layout_toEndOf="@id/tv_direction_text"
+        android:background="#00000000"
+        android:text="90"
+        android:textColor="#ffffff"
+        android:textSize="13sp"/>
+
+    <ProgressBar
+        android:id="@+id/pb_battry"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="178dp"
+        android:layout_height="10dp"
+        android:layout_alignBottom="@id/iv_databar_background"
+        android:layout_alignStart="@id/iv_databar_background"
+        android:layout_marginStart="1dp"
+        android:max="100"
+        android:progress="15"
+        android:progressDrawable="@drawable/power_full"
+        android:visibility="visible"/>
+
+    <ImageButton
+        android:id="@+id/ib_visible"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_above="@+id/ib_forward"
+        android:layout_alignStart="@+id/ib_leftward"
+        android:layout_margin="7.5dp"
+        android:background="#00000000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/visible_button"/>
+</RelativeLayout>

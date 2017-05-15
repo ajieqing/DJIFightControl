@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="#00000000"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_flight_state"
+        android:layout_width="144dp"
+        android:layout_height="40dp"
+        android:background="@drawable/menu_background1"
+        android:gravity="center"
+        android:text="无人机-已连接"
+        android:textColor="#ffffff"
+        android:textSize="17sp"/>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ly_task"
+                android:layout_width="144dp"
+                android:layout_height="40dp"
+                android:background="@drawable/menu_background2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/task_icon"/>
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical|start"
+                    android:text="自定义任务"
+                    android:textColor="#7c7979"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+
+            <LinearLayout
+                android:id="@+id/ly_album"
+                android:layout_width="144dp"
+                android:layout_height="40dp"
+                android:background="@drawable/menu_background2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/album_icon"/>
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical|start"
+                    android:text="我的相册"
+                    android:textColor="#7c7979"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+
+            <LinearLayout
+                android:id="@+id/ly_download"
+                android:layout_width="144dp"
+                android:layout_height="40dp"
+                android:background="@drawable/menu_background2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/download_icon"/>
+
+                <TextView
+                    android:id="@+id/tv_download"
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical|start"
+                    android:text="自动下载-开"
+                    android:textColor="#7c7979"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+
+            <LinearLayout
+                android:id="@+id/ly_setting"
+                android:layout_width="144dp"
+                android:layout_height="40dp"
+                android:background="@drawable/menu_background2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/setting_icon"/>
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical|start"
+                    android:text="设置"
+                    android:textColor="#7c7979"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+
+            <LinearLayout
+                android:id="@+id/ly_help"
+                android:layout_width="144dp"
+                android:layout_height="40dp"
+                android:background="@drawable/menu_background2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/help_icon"/>
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical|start"
+                    android:text="帮助"
+                    android:textColor="#7c7979"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+
+            <LinearLayout
+                android:id="@+id/ly_developer"
+                android:layout_width="144dp"
+                android:layout_height="40dp"
+                android:background="@drawable/menu_background2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginEnd="20dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/developer_icon"/>
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:background="#00000000"
+                    android:gravity="center_vertical|start"
+                    android:text="关于我们"
+                    android:textColor="#7c7979"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+
+            <ImageView
+                android:layout_width="144dp"
+                android:layout_height="1dp"
+                android:src="@drawable/split_line"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
