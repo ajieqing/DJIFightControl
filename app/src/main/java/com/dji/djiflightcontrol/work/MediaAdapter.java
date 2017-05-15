@@ -1,27 +1,18 @@
 package com.dji.djiflightcontrol.work;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.dji.djiflightcontrol.R;
+import com.dji.djiflightcontrol.common.MyMedio;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
-import dji.common.error.DJIError;
-import dji.sdk.camera.DJIMedia;
-import dji.sdk.camera.DJIMediaManager;
 
 /**
  * 作者:姜帅杰
@@ -30,14 +21,13 @@ import dji.sdk.camera.DJIMediaManager;
  */
 
 public class MediaAdapter extends BaseAdapter {
-    private ArrayList<DJIMedia> mediaList;
+    private ArrayList<MyMedio> mediaList;
     private Context context;
-    private File cacheDir;
+    private File flie;
 
-    public MediaAdapter(Context context, ArrayList<DJIMedia> mediaList) {
+    public MediaAdapter(Context context, ArrayList<MyMedio> mediaList) {
         this.context = context;
         this.mediaList = mediaList;
-        cacheDir = context.getCacheDir();
     }
 
     @Override
@@ -55,7 +45,7 @@ public class MediaAdapter extends BaseAdapter {
         return position;
     }
 
-    public void setData(ArrayList<DJIMedia> mediaList) {
+    public void setData(ArrayList<MyMedio> mediaList) {
         this.mediaList = mediaList;
         notifyDataSetChanged();
     }
@@ -75,58 +65,19 @@ public class MediaAdapter extends BaseAdapter {
             ivThumbnail.setImageDrawable(context.getResources().getDrawable(R.drawable.bg));
             return convertView;
         }
-        final DJIMedia djiMedia = mediaList.get(position);
-        viewHolder.id = djiMedia.getId();
-        final Handler handler = new Handler() {
+        final MyMedio djiMedia = mediaList.get(position);
+        flie = new File(MyMedio.dir + djiMedia.getName());
+        djiMedia.setSuccess(new MyMedio.OnSuccess() {
             @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                Bitmap bm = (Bitmap) msg.obj;
-                ivThumbnail.setImageBitmap(bm);
+            public void go() {
+                Glide.with(context).load(flie).into(ivThumbnail);
             }
-        };
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                djiMedia.fetchThumbnail(new DJIMediaManager.CameraDownloadListener<Bitmap>() {
-                    @Override
-                    public void onStart() {
-
-                    }
-
-                    @Override
-                    public void onRateUpdate(long l, long l1, long l2) {
-
-                    }
-
-                    @Override
-                    public void onProgress(long l, long l1) {
-
-                    }
-
-                    @Override
-                    public void onSuccess(Bitmap bitmap) {
-                        Message message = Message.obtain();
-                        message.obj = bitmap;
-                        handler.sendMessage(message);
-                        try {
-                            FileOutputStream outputStream = new FileOutputStream(cacheDir);
-                            ObjectOutputStream stream= new ObjectOutputStream(outputStream);
-                            stream.writeObject(bitmap);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(DJIError djiError) {
-
-                    }
-                });
-            }
-        }).start();
+        });
+        if (flie.exists()) {
+            Glide.with(context).load(flie).into(ivThumbnail);
+        } else {
+            djiMedia.fetchThumbnail();
+        }
         return convertView;
     }
 

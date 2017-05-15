@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,11 +18,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher.ViewFactory;
 
+import com.bumptech.glide.Glide;
 import com.dji.djiflightcontrol.R;
 import com.dji.djiflightcontrol.common.GestureListener;
+import com.dji.djiflightcontrol.common.MyMedio;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import dji.common.camera.DJICameraSettingsDef;
 import dji.common.error.DJICameraError;
@@ -39,8 +40,8 @@ import static com.dji.djiflightcontrol.common.DJISampleApplication.util;
 
 public class Photos extends Activity {
     ImageSwitcher imageSwitcher; //声明ImageSwitcher对象，图片显示区域
-    ListView listView;       //声明Gallery对象，图片列表索引
-    private ArrayList<DJIMedia> mediaList;
+    ListView listView;
+    private ArrayList<MyMedio> mediaList;
     private int position;
     private MediaAdapter mediaAdapter;
     private MessageHandler messageHandler;
@@ -91,41 +92,12 @@ public class Photos extends Activity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        final int position, long id) {
                 Photos.this.position = position;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mediaList.get(position).fetchThumbnail(new DJIMediaManager.CameraDownloadListener<Bitmap>() {
-                            @Override
-                            public void onStart() {
+                MyMedio myMedio = mediaList.get(position);
+                Message message = Message.obtain();
+                message.obj = myMedio.getName();
+                message.what = 1;
+                messageHandler.sendMessage(message);
 
-                            }
-
-                            @Override
-                            public void onRateUpdate(long l, long l1, long l2) {
-
-                            }
-
-                            @Override
-                            public void onProgress(long l, long l1) {
-
-                            }
-
-                            @Override
-                            public void onSuccess(Bitmap bitmap) {
-                                Message message = Message.obtain();
-                                message.obj = bitmap;
-                                message.what = 1;
-                                messageHandler.sendMessage(message);
-                                util.showToast("success");
-                            }
-
-                            @Override
-                            public void onFailure(DJIError djiError) {
-                                util.showToast(djiError.getDescription());
-                            }
-                        });
-                    }
-                }).start();
             }
 
             @Override
@@ -180,7 +152,7 @@ public class Photos extends Activity {
                         if (!dir.exists()) {
                             dir.mkdirs();
                         }
-                        DJIMedia downloadMedia = mediaList.get(position);
+                        DJIMedia downloadMedia = mediaList.get(position).getDjiMedia();
                         downloadMedia.fetchMediaData(dir, downloadMedia.getFileNameWithoutExtension(), new DJIMediaManager.CameraDownloadListener<String>() {
                             @Override
                             public void onStart() {
@@ -212,7 +184,7 @@ public class Photos extends Activity {
                         break;
                     case 1:
                         util.setCameraMode(DJICameraSettingsDef.CameraMode.MediaDownload);
-                        DJIMedia delMedia = mediaList.get(position);
+                        final DJIMedia delMedia = mediaList.get(position).getDjiMedia();
                         ArrayList<DJIMedia> delMediaList = new ArrayList<>();
                         delMediaList.add(delMedia);
                         getProductInstance().getCamera().getMediaManager().deleteMedia(delMediaList, new DJICommonCallbacks.DJICompletionCallbackWithTwoParam<ArrayList<DJIMedia>, DJICameraError>() {
@@ -221,6 +193,9 @@ public class Photos extends Activity {
                                 Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
                                 fetchMediaList();
                                 util.setCameraMode(DJICameraSettingsDef.CameraMode.RecordVideo);
+                                File file = new File(MyMedio.dir + delMedia.getFileName());
+                                if (file.exists())
+                                    file.delete();
                             }
 
                             @Override
@@ -259,7 +234,7 @@ public class Photos extends Activity {
                         public void onSuccess(ArrayList<DJIMedia> djiMedias) {
                             if (null != djiMedias) {
                                 if (!djiMedias.isEmpty()) {
-                                    mediaList = djiMedias;
+                                    initMediaList(djiMedias);
                                     Message message = Message.obtain();
                                     message.what = 100;
                                     messageHandler.sendMessage(message);
@@ -283,6 +258,15 @@ public class Photos extends Activity {
         }
     }
 
+    private void initMediaList(ArrayList<DJIMedia> djiMedias) {
+        Iterator<DJIMedia> iterator = djiMedias.iterator();
+        mediaList.clear();
+        while (iterator.hasNext()) {
+            DJIMedia media = iterator.next();
+            mediaList.add(new MyMedio(media));
+        }
+    }
+
     class MessageHandler extends Handler {
         public MessageHandler(Looper looper) {
             super(looper);
@@ -295,7 +279,8 @@ public class Photos extends Activity {
                 mediaList.clear();
                 mediaAdapter.setData(mediaList);
             } else if (msg.what == 1) {
-                imageSwitcher.setImageDrawable(new BitmapDrawable((Bitmap) msg.obj));
+                ImageView view = (ImageView) imageSwitcher.getChildAt(position);
+                Glide.with(Photos.this).load(new File(MyMedio.dir + msg.obj)).into(view);
             }
         }
     }
