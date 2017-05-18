@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <!-- Common button style -->
     <style name="set_dialog" parent="@android:style/Theme.Holo.Dialog">
@@ -49,13 +51,13 @@
     </style>
 
     <style name="Setting_TextView">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">45dp</item>
+        <item name="android:layout_width">144dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@android:color/white</item>
         <item name="android:textSize">14sp</item>
     </style>
 
@@ -70,10 +72,9 @@
     </style>
 
     <style name="Setting_EditText">
-        <item name="android:layout_width">100dp</item>
-        <item name="android:layout_height">45dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:gravity">center</item>
+        <item name="android:layout_width">144dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:gravity">center_horizontal</item>
         <item name="android:paddingLeft">5dp</item>
         <item name="android:paddingRight">5dp</item>
         <item name="android:textSize">14sp</item>

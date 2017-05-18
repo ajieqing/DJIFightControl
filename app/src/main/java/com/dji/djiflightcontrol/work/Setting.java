@@ -3,7 +3,6 @@ package com.dji.djiflightcontrol.work;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,9 +21,17 @@ public class Setting extends Activity implements Serializable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setting);
+        name = (EditText) findViewById(R.id.e_name);
+        high = (EditText) findViewById(R.id.e_high);
+        n = (EditText) findViewById(R.id.e_n);
+        name.setText(NAME);
+        high.setText(HIGH + "");
+        n.setText(N + "");
     }
 
-    public void save(View view) {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         String s;
         s = name.getText().toString();
         if (s.equals("")) {
@@ -47,14 +54,6 @@ public class Setting extends Activity implements Serializable {
         Intent intent = new Intent(this, Video.class);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        name = (EditText) findViewById(R.id.e_name);
-        high = (EditText) findViewById(R.id.e_high);
-        n = (EditText) findViewById(R.id.e_n);
     }
 
     @Override
@@ -84,7 +83,4 @@ public class Setting extends Activity implements Serializable {
         super.onPause();
     }
 
-    public void back(View view) {
-        finish();
-    }
 }

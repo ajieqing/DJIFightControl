@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <com.dji.djiflightcontrol.welocme.LargeImageView
+        android:id="@+id/largeimageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <Button
         android:id="@+id/btn_start_flightcontrol"
-        style="@style/common_button"
         android:layout_width="166dp"
         android:layout_height="50dp"
-        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_margin="5dp"
+        android:background="#95f4eaea"
+        android:clickable="false"
         android:onClick="onClick"
-        android:text="@string/start_flightcontrol"/>
-
-</LinearLayout>
+        android:text="@string/start_flightcontrol"
+        android:visibility="invisible"/>
+</RelativeLayout>

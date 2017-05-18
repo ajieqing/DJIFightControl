@@ -219,12 +219,12 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                 }
             }
         });
-        final TextView textView1 = (TextView) ly.findViewById(R.id.tv_download);
-        if (isAutoDownload) {
-            textView1.setText("自动下载-开");
-        } else {
-            textView1.setText("自动下载-关");
-        }
+//        final TextView textView1 = (TextView) ly.findViewById(R.id.tv_download);
+//        if (isAutoDownload) {
+//            textView1.setText("自动下载-开");
+//        } else {
+//            textView1.setText("自动下载-关");
+//        }
         LinearLayout ly_task = (LinearLayout) ly.findViewById(R.id.ly_task);
         ly_task.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -264,18 +264,18 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                 startActivity(intent);
             }
         });
-        LinearLayout ly_download = (LinearLayout) ly.findViewById(R.id.ly_download);
-        ly_download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isAutoDownload = !isAutoDownload;
-                if (isAutoDownload) {
-                    textView1.setText("自动下载-开");
-                } else {
-                    textView1.setText("自动下载-关");
-                }
-            }
-        });
+//        LinearLayout ly_download = (LinearLayout) ly.findViewById(R.id.ly_download);
+//        ly_download.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                isAutoDownload = !isAutoDownload;
+//                if (isAutoDownload) {
+//                    textView1.setText("自动下载-开");
+//                } else {
+//                    textView1.setText("自动下载-关");
+//                }
+//            }
+//        });
     }
 
     @Override

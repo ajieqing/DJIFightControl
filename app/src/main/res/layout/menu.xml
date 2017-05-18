@@ -77,35 +77,35 @@
                     android:textColor="#7c7979"/>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="144dp"
-                android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
+            <!--<ImageView-->
+                <!--android:layout_width="144dp"-->
+                <!--android:layout_height="1dp"-->
+                <!--android:src="@drawable/split_line"/>-->
 
-            <LinearLayout
-                android:id="@+id/ly_download"
-                android:layout_width="144dp"
-                android:layout_height="40dp"
-                android:background="@drawable/menu_background2"
-                android:gravity="center"
-                android:orientation="horizontal">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ly_download"-->
+                <!--android:layout_width="144dp"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:background="@drawable/menu_background2"-->
+                <!--android:gravity="center"-->
+                <!--android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/download_icon"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="16dp"-->
+                    <!--android:layout_height="16dp"-->
+                    <!--android:layout_marginEnd="20dp"-->
+                    <!--android:scaleType="fitCenter"-->
+                    <!--android:src="@drawable/download_icon"/>-->
 
-                <TextView
-                    android:id="@+id/tv_download"
-                    android:layout_width="75dp"
-                    android:layout_height="25dp"
-                    android:background="#00000000"
-                    android:gravity="center_vertical|start"
-                    android:text="自动下载-开"
-                    android:textColor="#7c7979"/>
-            </LinearLayout>
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_download"-->
+                    <!--android:layout_width="75dp"-->
+                    <!--android:layout_height="25dp"-->
+                    <!--android:background="#00000000"-->
+                    <!--android:gravity="center_vertical|start"-->
+                    <!--android:text="自动下载"-->
+                    <!--android:textColor="#7c7979"/>-->
+            <!--</LinearLayout>-->
 
             <ImageView
                 android:layout_width="144dp"

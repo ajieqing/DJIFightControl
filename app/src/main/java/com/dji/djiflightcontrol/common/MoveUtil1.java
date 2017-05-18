@@ -5,9 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.Toast;
 
-import com.dji.djiflightcontrol.work.Setting;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Timer;
@@ -36,7 +33,8 @@ import static com.dji.djiflightcontrol.common.DJISampleApplication.getCameraInst
  * 飞行器定距定速飞行控制工具类
  */
 
-public class MoveUtil1 implements Serializable {
+public class MoveUtil1 {
+    private static MoveUtil1 util = new MoveUtil1();
     private final HashMap<Integer, MyMedio> medios = new HashMap<>();
     private ArrayList<MyMedio> failureMedios = new ArrayList<>();
     private double vz, vz_old = 0;
@@ -83,11 +81,78 @@ public class MoveUtil1 implements Serializable {
     private int power;
     private int order = 0;
 
-    protected MoveUtil1() {
+    private MoveUtil1() {
+    }
+
+    public static MoveUtil1 getUtil() {
+        return util;
     }
 
     public void update() {
+        initFlightController();
+    }
+
+    //初始化控制器
+    public void initFlightController() {
         aircraft = getAircraftInstance();
+        if (aircraft == null || !aircraft.isConnected()) {
+            mFlightController = null;
+            showToast("设备链接失败");
+        } else {
+            mFlightController = aircraft.getFlightController();
+            if (mFlightController == null) {
+                showToast("设备链接失败");
+            } else {
+                showToast("设备链接成功");
+            }
+            if (mFlightController != null) {
+                mFlightController.enableVirtualStickControlMode(new DJICommonCallbacks.DJICompletionCallback() {
+                    @Override
+                    public void onResult(DJIError djiError) {
+                        if (djiError != null) {
+                            showToast(djiError.getDescription());
+                        }
+                    }
+                });
+                mFlightController.setHorizontalCoordinateSystem(DJIVirtualStickFlightCoordinateSystem.Body);
+                mFlightController.setRollPitchControlMode(DJIVirtualStickRollPitchControlMode.Velocity);
+                mFlightController.setVerticalControlMode(DJIVirtualStickVerticalControlMode.Velocity);
+                mFlightController.setYawControlMode(DJIVirtualStickYawControlMode.Angle);
+                mFlightController.setUpdateSystemStateCallback(new DJIFlightControllerDelegate.FlightControllerUpdateSystemStateCallback() {
+                    @Override
+                    public void onResult(DJIFlightControllerCurrentState djiFlightControllerCurrentState) {
+                        vx = djiFlightControllerCurrentState.getVelocityX();
+                        vy = djiFlightControllerCurrentState.getVelocityY();
+                        vz = djiFlightControllerCurrentState.getVelocityZ();
+                        h = djiFlightControllerCurrentState.getAircraftLocation().getAltitude();
+                        la = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
+                        lo = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
+                        if (done && (Math.abs(vx) > 0 || Math.abs(vy) > 0) && carrect == 0) {
+                            carrect = carrect_d + (float) getAAndBDsitanceForLongitudeAndLatitude(lo, la, lo_old, la_old);
+                        } else if (!done && vx == 0 && vy == 0) {
+                            carrect_d = (float) getAAndBDsitanceForLongitudeAndLatitude(lo, la, lo_old, la_old);
+                        }
+                    }
+                });
+                aircraft.getBattery().setBatteryStateUpdateCallback(new DJIBattery.DJIBatteryStateUpdateCallback() {
+                    @Override
+                    public void onResult(DJIBatteryState djiBatteryState) {
+                        power = djiBatteryState.getLifetimeRemainingPercent();
+                        power = djiBatteryState.getCurrentEnergy() * 100 / djiBatteryState.getFullChargeEnergy();
+
+                    }
+                });
+            }
+        }
+    }
+
+    public void showToast(String description) {
+        Toast.makeText(context, description, Toast.LENGTH_SHORT).show();
+    }
+
+    public double getAAndBDsitanceForLongitudeAndLatitude(double A_Longitude, double A_Latitude, double B_Longitude, double B_Latitude) {
+
+        return Math.abs(6371004 * Math.acos(Math.sin(A_Latitude) * Math.sin(B_Latitude) * Math.cos(A_Longitude - B_Longitude) + Math.cos(A_Latitude) * Math.cos(B_Latitude)) * Math.PI / 180);
     }
 
     public void setContext(Context context) {
@@ -188,10 +253,6 @@ public class MoveUtil1 implements Serializable {
             showToast("正在起飞");
     }
 
-    public void showToast(String description) {
-        Toast.makeText(context, description, Toast.LENGTH_SHORT).show();
-    }
-
     public void land() {
         if (!landing) {
             landing = true;
@@ -239,65 +300,6 @@ public class MoveUtil1 implements Serializable {
             runTimer.purge();
             runTimer = null;
         }
-    }
-
-    //初始化控制器
-    public void initFlightController() {
-        aircraft = DJISampleApplication.getAircraftInstance();
-        if (aircraft == null || !aircraft.isConnected()) {
-            mFlightController = null;
-            showToast("设备链接失败");
-        } else {
-            mFlightController = aircraft.getFlightController();
-            if (mFlightController == null) {
-                showToast("设备链接失败");
-            } else {
-                showToast("设备链接成功");
-            }
-            if (mFlightController != null) {
-                mFlightController.enableVirtualStickControlMode(new DJICommonCallbacks.DJICompletionCallback() {
-                    @Override
-                    public void onResult(DJIError djiError) {
-                        if (djiError != null) {
-                            showToast(djiError.getDescription());
-                        }
-                    }
-                });
-                mFlightController.setHorizontalCoordinateSystem(DJIVirtualStickFlightCoordinateSystem.Body);
-                mFlightController.setRollPitchControlMode(DJIVirtualStickRollPitchControlMode.Velocity);
-                mFlightController.setVerticalControlMode(DJIVirtualStickVerticalControlMode.Velocity);
-                mFlightController.setYawControlMode(DJIVirtualStickYawControlMode.Angle);
-                mFlightController.setUpdateSystemStateCallback(new DJIFlightControllerDelegate.FlightControllerUpdateSystemStateCallback() {
-                    @Override
-                    public void onResult(DJIFlightControllerCurrentState djiFlightControllerCurrentState) {
-                        vx = djiFlightControllerCurrentState.getVelocityX();
-                        vy = djiFlightControllerCurrentState.getVelocityY();
-                        vz = djiFlightControllerCurrentState.getVelocityZ();
-                        h = djiFlightControllerCurrentState.getAircraftLocation().getAltitude();
-                        la = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
-                        lo = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
-                        if (done && (Math.abs(vx) > 0 || Math.abs(vy) > 0) && carrect == 0) {
-                            carrect = carrect_d + (float) getAAndBDsitanceForLongitudeAndLatitude(lo, la, lo_old, la_old);
-                        } else if (!done && vx == 0 && vy == 0) {
-                            carrect_d = (float) getAAndBDsitanceForLongitudeAndLatitude(lo, la, lo_old, la_old);
-                        }
-                    }
-                });
-                aircraft.getBattery().setBatteryStateUpdateCallback(new DJIBattery.DJIBatteryStateUpdateCallback() {
-                    @Override
-                    public void onResult(DJIBatteryState djiBatteryState) {
-                        power = djiBatteryState.getLifetimeRemainingPercent();
-                        power = djiBatteryState.getCurrentEnergy() * 100 / djiBatteryState.getFullChargeEnergy();
-
-                    }
-                });
-            }
-        }
-    }
-
-    public double getAAndBDsitanceForLongitudeAndLatitude(double A_Longitude, double A_Latitude, double B_Longitude, double B_Latitude) {
-
-        return Math.abs(6371004 * Math.acos(Math.sin(A_Latitude) * Math.sin(B_Latitude) * Math.cos(A_Longitude - B_Longitude) + Math.cos(A_Latitude) * Math.cos(B_Latitude)) * Math.PI / 180);
     }
 
     public double getD() {
@@ -451,10 +453,10 @@ public class MoveUtil1 implements Serializable {
                             setCameraMode(DJICameraSettingsDef.CameraMode.RecordVideo);
                             if (error == null) {
                                 showToast("拍照成功");
-                                medios.put(order++, new MyMedio(getH(), la, lo, Setting.NAME + order));
+//                                medios.put(order++, new MyMedio(getH(), la, lo, Setting.NAME + order));
                             } else {
                                 showToast(error.getDescription());
-                                failureMedios.add(new MyMedio(getH(), la, lo, Setting.NAME));
+//                                failureMedios.add(new MyMedio(getH(), la, lo, Setting.NAME));
                             }
                             action.finish();
                         }

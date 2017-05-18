@@ -90,6 +90,15 @@
         <activity
             android:name=".work.Photos"
             android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".work.HowUse"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".work.LinkedFlight"
+            android:screenOrientation="sensorLandscape"/>
+        <activity
+            android:name=".work.Question"
+            android:screenOrientation="sensorLandscape"/>
     </application>
 
 </manifest>
