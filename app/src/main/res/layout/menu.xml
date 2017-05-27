@@ -9,7 +9,7 @@
         android:id="@+id/tv_flight_state"
         android:layout_width="144dp"
         android:layout_height="40dp"
-        android:background="@drawable/menu_background1"
+        android:background="@mipmap/menu_background1"
         android:gravity="center"
         android:text="无人机-已连接"
         android:textColor="#ffffff"
@@ -28,7 +28,7 @@
                 android:id="@+id/ly_task"
                 android:layout_width="144dp"
                 android:layout_height="40dp"
-                android:background="@drawable/menu_background2"
+                android:background="@drawable/menu_bg"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -37,7 +37,7 @@
                     android:layout_height="16dp"
                     android:layout_marginEnd="20dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/task_icon"/>
+                    android:src="@mipmap/task_icon"/>
 
                 <TextView
                     android:layout_width="75dp"
@@ -51,13 +51,14 @@
             <ImageView
                 android:layout_width="144dp"
                 android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/split_line"/>
 
             <LinearLayout
                 android:id="@+id/ly_album"
                 android:layout_width="144dp"
                 android:layout_height="40dp"
-                android:background="@drawable/menu_background2"
+                android:background="@drawable/menu_bg"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -66,7 +67,7 @@
                     android:layout_height="16dp"
                     android:layout_marginEnd="20dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/album_icon"/>
+                    android:src="@mipmap/album_icon"/>
 
                 <TextView
                     android:layout_width="75dp"
@@ -78,45 +79,46 @@
             </LinearLayout>
 
             <!--<ImageView-->
-                <!--android:layout_width="144dp"-->
-                <!--android:layout_height="1dp"-->
-                <!--android:src="@drawable/split_line"/>-->
+            <!--android:layout_width="144dp"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:src="@drawable/split_line"/>-->
 
             <!--<LinearLayout-->
-                <!--android:id="@+id/ly_download"-->
-                <!--android:layout_width="144dp"-->
-                <!--android:layout_height="40dp"-->
-                <!--android:background="@drawable/menu_background2"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="horizontal">-->
+            <!--android:id="@+id/ly_download"-->
+            <!--android:layout_width="144dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:background="@drawable/menu_background2"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
 
-                <!--<ImageView-->
-                    <!--android:layout_width="16dp"-->
-                    <!--android:layout_height="16dp"-->
-                    <!--android:layout_marginEnd="20dp"-->
-                    <!--android:scaleType="fitCenter"-->
-                    <!--android:src="@drawable/download_icon"/>-->
+            <!--<ImageView-->
+            <!--android:layout_width="16dp"-->
+            <!--android:layout_height="16dp"-->
+            <!--android:layout_marginEnd="20dp"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/download_icon"/>-->
 
-                <!--<TextView-->
-                    <!--android:id="@+id/tv_download"-->
-                    <!--android:layout_width="75dp"-->
-                    <!--android:layout_height="25dp"-->
-                    <!--android:background="#00000000"-->
-                    <!--android:gravity="center_vertical|start"-->
-                    <!--android:text="自动下载"-->
-                    <!--android:textColor="#7c7979"/>-->
+            <!--<TextView-->
+            <!--android:id="@+id/tv_download"-->
+            <!--android:layout_width="75dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:background="#00000000"-->
+            <!--android:gravity="center_vertical|start"-->
+            <!--android:text="自动下载"-->
+            <!--android:textColor="#7c7979"/>-->
             <!--</LinearLayout>-->
 
             <ImageView
                 android:layout_width="144dp"
                 android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/split_line"/>
 
             <LinearLayout
                 android:id="@+id/ly_setting"
                 android:layout_width="144dp"
                 android:layout_height="40dp"
-                android:background="@drawable/menu_background2"
+                android:background="@drawable/menu_bg"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -125,7 +127,7 @@
                     android:layout_height="16dp"
                     android:layout_marginEnd="20dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/setting_icon"/>
+                    android:src="@mipmap/setting_icon"/>
 
                 <TextView
                     android:layout_width="75dp"
@@ -139,13 +141,14 @@
             <ImageView
                 android:layout_width="144dp"
                 android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/split_line"/>
 
             <LinearLayout
                 android:id="@+id/ly_help"
                 android:layout_width="144dp"
                 android:layout_height="40dp"
-                android:background="@drawable/menu_background2"
+                android:background="@drawable/menu_bg"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -154,7 +157,7 @@
                     android:layout_height="16dp"
                     android:layout_marginEnd="20dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/help_icon"/>
+                    android:src="@mipmap/help_icon"/>
 
                 <TextView
                     android:layout_width="75dp"
@@ -168,13 +171,14 @@
             <ImageView
                 android:layout_width="144dp"
                 android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/split_line"/>
 
             <LinearLayout
                 android:id="@+id/ly_developer"
                 android:layout_width="144dp"
                 android:layout_height="40dp"
-                android:background="@drawable/menu_background2"
+                android:background="@drawable/menu_bg"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -183,7 +187,7 @@
                     android:layout_height="16dp"
                     android:layout_marginEnd="20dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/developer_icon"/>
+                    android:src="@mipmap/developer_icon"/>
 
                 <TextView
                     android:layout_width="75dp"
@@ -197,12 +201,8 @@
             <ImageView
                 android:layout_width="144dp"
                 android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
-
-            <ImageView
-                android:layout_width="144dp"
-                android:layout_height="1dp"
-                android:src="@drawable/split_line"/>
+                android:scaleType="centerCrop"
+                android:src="@mipmap/split_line"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

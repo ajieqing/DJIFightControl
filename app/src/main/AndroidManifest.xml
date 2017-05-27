@@ -60,7 +60,7 @@
         </service>
         <!-- DJI SDK -->
         <activity
-            android:name="com.dji.djiflightcontrol.welocme.Welcome"
+            android:name="com.dji.djiflightcontrol.activitys.Welcome"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -69,35 +69,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.dji.djiflightcontrol.work.Video"
+            android:name="com.dji.djiflightcontrol.activitys.Video"
             android:launchMode="singleTask"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name="com.dji.djiflightcontrol.common.Go"
+            android:name=".activitys.Prepare"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".welocme.Prepare"
+            android:name=".activitys.Setting"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".work.Setting"
+            android:name=".activitys.Help"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".work.Help"
+            android:name=".activitys.AboutOurs"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".work.AboutOurs"
+            android:name=".activitys.Photos"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".work.Photos"
+            android:name=".activitys.HowUse"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name=".work.HowUse"
-            android:screenOrientation="sensorLandscape"/>
-        <activity
-            android:name=".work.LinkedFlight"
-            android:screenOrientation="sensorLandscape"/>
-        <activity
-            android:name=".work.Question"
+            android:name=".activitys.Question"
             android:screenOrientation="sensorLandscape"/>
     </application>
 

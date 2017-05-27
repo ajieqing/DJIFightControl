@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.dji.djiflightcontrol.R;
+import com.dji.djiflightcontrol.common.util.MoveUtil1;
 
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
@@ -22,6 +23,9 @@ public class DJISampleApplication extends Application {
     public static final String FLAG_CONNECTION_CHANGE = "com_example_dji_sdkdemo3_connection_change";
     public static final MoveUtil1 util = MoveUtil1.getUtil();
     private static final String TAG = DJISampleApplication.class.getName();
+    public static String NAME = "";
+    public static float HIGH = 0;
+    public static int N = 0;
     private static DJIBaseProduct mProduct;
     private Handler mHandler;
     private DJISDKManager.DJISDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.DJISDKManagerCallback() {
