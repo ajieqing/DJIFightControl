@@ -2,13 +2,14 @@ package com.dji.djiflightcontrol.common;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.dji.djiflightcontrol.R;
-import com.dji.djiflightcontrol.common.util.MoveUtil1;
+import com.dji.djiflightcontrol.common.util.MoveUtil;
 
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
@@ -19,13 +20,14 @@ import dji.sdk.products.DJIAircraft;
 import dji.sdk.sdkmanager.DJISDKManager;
 
 public class DJISampleApplication extends Application {
-
     public static final String FLAG_CONNECTION_CHANGE = "com_example_dji_sdkdemo3_connection_change";
-    public static final MoveUtil1 util = MoveUtil1.getUtil();
+    public static final MoveUtil util = MoveUtil.getUtil();
     private static final String TAG = DJISampleApplication.class.getName();
+    public static String dir;
     public static String NAME = "";
     public static float HIGH = 0;
     public static int N = 0;
+    public static boolean SDCARDAVALIABLE;
     private static DJIBaseProduct mProduct;
     private Handler mHandler;
     private DJISDKManager.DJISDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.DJISDKManagerCallback() {
@@ -132,16 +134,30 @@ public class DJISampleApplication extends Application {
         }
         return mProduct;
     }
-
+    private static DJISampleApplication app;
     @Override
     public void onCreate() {
         super.onCreate();
         util.setContext(getApplicationContext());
         mHandler = new Handler(Looper.getMainLooper());
+        app=this;
         /**
          * handles SDK Registration using the API_KEY
          */
         DJISDKManager.getInstance().initSDKManager(this, mDJISDKManagerCallback);
+        if (externalMemoryAvailable()) {
+            dir = Environment.getExternalStorageDirectory().toString() + "/jie/";
+            SDCARDAVALIABLE = true;
+        } else {
+            dir = Environment.getDataDirectory().toString() + "/jie/";
+            SDCARDAVALIABLE = false;
+        }
+
+    }
+
+    public boolean externalMemoryAvailable() {
+        return android.os.Environment.getExternalStorageState().equals(
+                android.os.Environment.MEDIA_MOUNTED);
     }
 
 }

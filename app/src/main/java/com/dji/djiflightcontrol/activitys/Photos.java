@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -21,11 +23,19 @@ import android.widget.ViewSwitcher.ViewFactory;
 import com.bumptech.glide.Glide;
 import com.dji.djiflightcontrol.R;
 import com.dji.djiflightcontrol.common.GestureListener;
-import com.dji.djiflightcontrol.common.MyMedio;
+import com.dji.djiflightcontrol.common.media.MediaAdapter;
+import com.dji.djiflightcontrol.common.media.MyMedia;
+import com.dji.djiflightcontrol.common.util.ImageInfo;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import dji.common.camera.DJICameraSettingsDef;
 import dji.common.error.DJICameraError;
@@ -42,10 +52,11 @@ import static com.dji.djiflightcontrol.common.DJISampleApplication.util;
 public class Photos extends Activity {
     ImageSwitcher imageSwitcher; //声明ImageSwitcher对象，图片显示区域
     ListView listView;
-    private ArrayList<MyMedio> mediaList;
-    private int position;
+    private ArrayList<MyMedia> mediaList;
+    private int position = 0;
     private MediaAdapter mediaAdapter;
     private MessageHandler messageHandler;
+    private Set<Double> retakephotos = new HashSet<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +69,7 @@ public class Photos extends Activity {
         imageSwitcher.setFactory(new MyViewFactory(Photos.this));
         imageSwitcher.setLongClickable(true);
         imageSwitcher.setOnLongClickListener(new View.OnLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onLongClick(View v) {
                 dialog();
@@ -117,35 +129,44 @@ public class Photos extends Activity {
                     }
             );
         }
-        /*
-        for (int i = 0; i < util.getFailureMedios().size(); i++) {
-            listView.addView(mediaAdapter.getView(mediaList.size() + i, new View(this), null));
-        }
-        */
     }
 
     private void showNext() {
-        MyMedio myMedio = mediaList.get(position);
+        MyMedia myMedio = mediaList.get(position);
         ImageView image = (ImageView) imageSwitcher.getNextView();
-        Glide.with(Photos.this).load(new File(MyMedio.dir + myMedio.getName())).centerCrop().into(image);
+        Glide.with(Photos.this).load(new File(myMedio.getName())).error(R.mipmap.logo).centerCrop().into(image);
         imageSwitcher.showNext();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     protected void dialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(Photos.this);
-        /*
-        if (position >= mediaList.size()) {
-            if (!util.getFailureMedios().isEmpty())
-                builder.setMessage(util.getFailureMedios().get(position - mediaList.size()).toString());
-        } else {
-            int i = util.getMedios().size() - mediaList.size() + position;
-            if (i >= 0 && i < util.getMedios().size())
-                builder.setMessage(util.getMedios().get(i).toString() + "创建时间" + mediaList.get(position).getCreatedDate());
-            else
-                builder.setMessage("名字" + mediaList.get(position).getFileName() + "创建时间" + mediaList.get(position).getCreatedDate());
+        if (mediaList.size() == 0) {
+            builder.setMessage("相册中无相片");
+            builder.show();
+            return;
         }
-        */
-        String[] items = new String[]{"下载", "删除"};
+        final MyMedia media = mediaList.get(position);
+        if (media == null) {
+            builder.setMessage("未选中照片");
+            builder.show();
+            return;
+        }
+        File file = new File(media.getName());
+        try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+            FileInputStream stream = new FileInputStream(file);
+            ObjectInputStream objectIntput = new ObjectInputStream(stream);
+            ImageInfo imageInfo;
+            imageInfo = new ImageInfo(file.getPath());
+            builder.setMessage("照片名称：" + imageInfo.getAttribute(ImageInfo.NAME) + "拍照高度：" + imageInfo.getAttribute(ImageInfo.H));
+            objectIntput.close();
+            stream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] items = new String[]{"下载", "删除", "重拍"};
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -153,12 +174,12 @@ public class Photos extends Activity {
                     case 0:
                         util.setCameraMode(DJICameraSettingsDef.CameraMode.MediaDownload);
                         String path = getApplicationContext().getFilesDir().getAbsolutePath() + "/picture/" + NAME;
-                        File dir = new File(path);
-                        if (!dir.exists()) {
-                            dir.mkdirs();
+                        File file = new File(path);
+                        if (!file.exists()) {
+                            file.mkdirs();
                         }
-                        DJIMedia downloadMedia = mediaList.get(position).getDjiMedia();
-                        downloadMedia.fetchMediaData(dir, downloadMedia.getFileNameWithoutExtension(), new DJIMediaManager.CameraDownloadListener<String>() {
+                        DJIMedia downloadMedia = media.getDjiMedia();
+                        downloadMedia.fetchMediaData(file, downloadMedia.getFileNameWithoutExtension(), new DJIMediaManager.CameraDownloadListener<String>() {
                             @Override
                             public void onStart() {
 
@@ -189,7 +210,7 @@ public class Photos extends Activity {
                         break;
                     case 1:
                         util.setCameraMode(DJICameraSettingsDef.CameraMode.MediaDownload);
-                        final DJIMedia delMedia = mediaList.get(position).getDjiMedia();
+                        final DJIMedia delMedia = media.getDjiMedia();
                         ArrayList<DJIMedia> delMediaList = new ArrayList<>();
                         delMediaList.add(delMedia);
                         getProductInstance().getCamera().getMediaManager().deleteMedia(delMediaList, new DJICommonCallbacks.DJICompletionCallbackWithTwoParam<ArrayList<DJIMedia>, DJICameraError>() {
@@ -198,7 +219,7 @@ public class Photos extends Activity {
                                 Toast.makeText(getApplicationContext(), "删除成功", Toast.LENGTH_SHORT).show();
                                 fetchMediaList();
                                 util.setCameraMode(DJICameraSettingsDef.CameraMode.RecordVideo);
-                                File file = new File(MyMedio.dir + delMedia.getFileName());
+                                File file = new File(media.getName());
                                 if (file.exists())
                                     file.delete();
                             }
@@ -210,6 +231,13 @@ public class Photos extends Activity {
                             }
                         });
                         break;
+                    case 2:
+                        if (media.getDjiMedia() != null && media.getH() != 0) {
+                            //重拍处理
+                            if (media.getB_name().contains(NAME)) {
+                                retakephotos.add(media.getH());
+                            }
+                        }
                 }
             }
         });
@@ -265,11 +293,40 @@ public class Photos extends Activity {
 
     private void initMediaList(ArrayList<DJIMedia> djiMedias) {
         Iterator<DJIMedia> iterator = djiMedias.iterator();
+        Map<String, MyMedia> mediaMap = util.getMedias();
         mediaList.clear();
         while (iterator.hasNext()) {
             DJIMedia media = iterator.next();
-            mediaList.add(new MyMedio(media));
+            MyMedia myMedia = mediaMap.get(media.getCreatedDate());
+            if (myMedia != null)
+                mediaList.add(new MyMedia(myMedia.getH(), media, myMedia.getB_name()));
+            else
+                mediaList.add(new MyMedia(media));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (retakephotos.size() > 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("是否开始重拍");
+            builder.setItems(new String[]{"开始", "取消"}, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            util.showToast("开始重拍");
+                            util.retakephotos(retakephotos);
+                            break;
+                        case 1:
+                            retakephotos.clear();
+                            break;
+                    }
+                }
+            });
+            builder.show();
+        }
+        super.onBackPressed();
     }
 
     @Override

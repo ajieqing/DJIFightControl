@@ -33,7 +33,6 @@ public class Setting extends Activity implements Serializable {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         String s;
         s = name.getText().toString();
         if (s.equals("")) {
@@ -53,9 +52,11 @@ public class Setting extends Activity implements Serializable {
             return;
         }
         N = Integer.parseInt(s);
+        super.onBackPressed();
         Intent intent = new Intent(this, Video.class);
         startActivity(intent);
         finish();
+
     }
 
 }

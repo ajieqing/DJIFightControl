@@ -90,12 +90,7 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                 if (isVisible) {
                     giveFunction();
                 } else {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            start();
-                        }
-                    }).start();
+                    start();
                 }
                 break;
             case R.id.ib_takeoff:
@@ -119,6 +114,7 @@ public class Video extends Activity implements View.OnClickListener, TextureView
     }
 
     private void start() {
+        if (!util.prepaerd()) return;
         Action action = new Action(HIGH, N, ActionType.UP);
         action.start();
         action.setOnActionFinishListener(new OnActionFinishListener() {
@@ -168,19 +164,6 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                 }
             }
         });
-//        final TextView textView1 = (TextView) ly.findViewById(R.id.tv_download);
-//        if (isAutoDownload) {
-//            textView1.setText("自动下载-开");
-//        } else {
-//            textView1.setText("自动下载-关");
-//        }
-        LinearLayout ly_task = (LinearLayout) ly.findViewById(R.id.ly_task);
-        ly_task.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         LinearLayout ly_album = (LinearLayout) ly.findViewById(R.id.ly_album);
         ly_album.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,18 +196,6 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                 startActivity(intent);
             }
         });
-//        LinearLayout ly_download = (LinearLayout) ly.findViewById(R.id.ly_download);
-//        ly_download.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                isAutoDownload = !isAutoDownload;
-//                if (isAutoDownload) {
-//                    textView1.setText("自动下载-开");
-//                } else {
-//                    textView1.setText("自动下载-关");
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -282,7 +253,7 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                     handler.sendEmptyMessage(2);
                 }
             };
-            timer.schedule(timerTask, 0, 10);
+            timer.schedule(timerTask, 0, 100);
         }
     }
 
@@ -536,6 +507,11 @@ public class Video extends Activity implements View.OnClickListener, TextureView
             ib_backward.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
+                    switch (event.getAction()) {
+                        case MotionEvent.ACTION_DOWN:
+                            util.takePhoto();
+                            break;
+                    }
                     return true;
                 }
             });
@@ -636,56 +612,24 @@ public class Video extends Activity implements View.OnClickListener, TextureView
             ib_rise.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_UP:
-                            mThrottle = 0;
-                            updateUtil();
-                            break;
-                        case MotionEvent.ACTION_DOWN:
-                            mThrottle = -0.1f;
-                            updateUtil();
-                            break;
-                    }
                     return true;
                 }
             });
             ib_fall.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_UP:
-                            mThrottle = 0;
-                            updateUtil();
-                            break;
-                        case MotionEvent.ACTION_DOWN:
-                            mThrottle = 0.1f;
-                            updateUtil();
-                            break;
-                    }
                     return true;
                 }
             });
             ib_turnleft.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            mYaw -= 1f;
-                            updateUtil();
-                            break;
-                    }
                     return true;
                 }
             });
             ib_turnright.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    switch (event.getAction()) {
-                        case MotionEvent.ACTION_DOWN:
-                            mYaw += 1f;
-                            updateUtil();
-                            break;
-                    }
                     return true;
                 }
             });
@@ -801,6 +745,10 @@ public class Video extends Activity implements View.OnClickListener, TextureView
                                 activity.flightstate.setText("飞行器-未连接");
                             }
                         }
+                        activity.tv_battry.invalidate();
+                        activity.tv_h.invalidate();
+                        activity.tv_v.invalidate();
+                        activity.tv_y.invalidate();
                         break;
                 }
             }

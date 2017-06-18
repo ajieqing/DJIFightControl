@@ -5,13 +5,13 @@ import static com.dji.djiflightcontrol.common.DJISampleApplication.util;
  * 飞行器执行的动作
  */
 public class Action{
-    private float distance;             //飞行器移动距离
+    private double distance;             //飞行器移动距离
     private ActionType type;            //动作类型
     private OnActionFinishListener listener;//飞行器动作完成监听器
     private int n = 0;                      //拍照次数
     private int step = 0;
 
-    public Action(float distance, int n, ActionType type) {
+    public Action(double distance, int n, ActionType type) {
         this.n = n;
         this.distance = distance;
         this.type = type;
@@ -27,7 +27,7 @@ public class Action{
             listener.onActionFinish();
     }
 
-    public float getDistance() {
+    public double getDistance() {
         return distance;
     }
 

@@ -25,36 +25,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/ly_task"
-                android:layout_width="144dp"
-                android:layout_height="40dp"
-                android:background="@drawable/menu_bg"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/task_icon"/>
-
-                <TextView
-                    android:layout_width="75dp"
-                    android:layout_height="25dp"
-                    android:background="#00000000"
-                    android:gravity="center_vertical|start"
-                    android:text="自定义任务"
-                    android:textColor="#7c7979"/>
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="144dp"
-                android:layout_height="1dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/split_line"/>
-
-            <LinearLayout
                 android:id="@+id/ly_album"
                 android:layout_width="144dp"
                 android:layout_height="40dp"

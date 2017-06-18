@@ -8,12 +8,14 @@
         android:id="@+id/switcher"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:background="@mipmap/logo"
         android:layout_weight="1">
     </ImageSwitcher>
 
     <ListView
         android:id="@+id/listview"
         android:layout_height="match_parent"
+        android:background="#66666b"
         android:layout_width="150dp">
     </ListView>
 

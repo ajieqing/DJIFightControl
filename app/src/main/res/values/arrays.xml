@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="helps">
-        <item>开箱与组装</item>
-        <item>安卓Guidance</item>
-        <item>选配件与安装</item>
+        <item>M100安装</item>
+        <item>安装Guidance</item>
+        <item>云台安装</item>
         <item>M100官网</item>
         <item>常见问题</item>
         <item>连接设备</item>

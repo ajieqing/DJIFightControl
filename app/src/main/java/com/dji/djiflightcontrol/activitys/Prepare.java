@@ -80,7 +80,7 @@ public class Prepare extends Activity {
     }
 
     public void onClick(View view) {
-        Intent intent = new Intent(this, Video.class);
+        Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
         finish();
     }
